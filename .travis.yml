@@ -9,4 +9,4 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 install:
-  - docker-compose -f udacity-c3-deployment/
+  - docker-compose up
