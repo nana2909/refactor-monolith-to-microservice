@@ -24,6 +24,7 @@ install:
   - docker tag reverseproxy minhngoc2909/reverseproxy:latest
 
 after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push minhngoc2909/udagram-api-feed:latest
   - docker push minhngoc2909/udagram-api-user:latest
   - docker push minhngoc2909/udagram-frontend:latest
