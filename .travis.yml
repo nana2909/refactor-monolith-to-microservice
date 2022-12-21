@@ -3,6 +3,7 @@ services: docker
 
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
+  - DOCKER_USERNAME=minhngoc2909
 
 before_install:
   - docker -v && docker-compose -v
@@ -12,4 +13,15 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - docker-compose build
+  - docker build -f udagram-feed-api/Dockerfile -t  minhngoc2909/udagram-feed-api:latest udagram-feed-api
+  - docker build -f udagram-user-api/Dockerfile -t  minhngoc2909/udagram-user-api:latest udagram-user-api
+  - docker build -f udagram-frontend/Dockerfile -t  minhngoc2909/udagram-frontend:latest udagram-frontend
+  - docker build -f udagram-reverse-proxy/Dockerfile -t  minhngoc2909/udagram-reverse-proxy:latest udagram-reverse-proxy
+
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push minhngoc2909/udagram-feed-api:latest
+  - docker push minhngoc2909/udagram-user-api:latest
+  - docker push minhngoc2909/udagram-frontend:latest
+  - docker push minhngoc2909/udagram-reverse-proxy:latest
