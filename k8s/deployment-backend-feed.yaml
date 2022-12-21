@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  labels:
+    service: udagram-api-feed
+  name: udagram-api-feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: udagram-api-feed
+  template:
+    metadata:
+      labels:
+        service: udagram-api-feed
+    spec:
+      containers:
+      - image: minhngoc2909/udagram-api-feed
+        name: udagram-api-feed
+        imagePullPolicy: Always  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                  
+        envFrom:
+        - configMapRef:
+            name: env-config
+        env:
+        - name: POSTGRES_feedNAME
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: POSTGRES_feedNAME 
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: POSTGRES_HOST
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: POSTGRES_DB
+        - name: AWS_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_BUCKET
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_REGION
+        - name: AWS_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_PROFILE
+        - name: JWT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_PROFILE
+        - name: URL
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: URL
+      restartPolicy: Always
