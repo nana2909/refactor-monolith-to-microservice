@@ -4,7 +4,7 @@ metadata:
   name: env-config
 data:
   AWS_BUCKET: test-hana-dev
-  AWS_PROFILE: hana-dev
+  AWS_PROFILE: default
   AWS_REGION: us-east-1
   JWT_SECRET: hello
   POSTGRES_DB: postgres
