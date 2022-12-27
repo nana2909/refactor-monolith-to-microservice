@@ -1,12 +1,12 @@
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: env-configmap
+  name: env-config
 data:
-  AWS_BUCKET: 
-  AWS_PROFILE:
-  AWS_REGION: 
-  JWT_SECRET: 
-  POSTGRES_DB: 
-  POSTGRES_HOST: 
-  URL: 
+  AWS_BUCKET: test-hana-dev
+  AWS_PROFILE: hana-dev
+  AWS_REGION: us-east-1
+  JWT_SECRET: hello
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: cdr.ch1qfdtztozl.us-east-1.rds.amazonaws.com
+  URL: default

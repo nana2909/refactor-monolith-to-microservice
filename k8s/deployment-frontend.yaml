@@ -1,8 +1,7 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: udagram-frontend
-  namespace: udagram
   labels:
     app: udagram-frontend
 spec:
@@ -14,11 +13,14 @@ spec:
     metadata:
       labels:
         app: udagram-frontend
+        api: external
     spec:
       containers:
       - name: udagram-frontend
-        image: minhngoc2909/udagram-frontend:latest
-        imagePullPolicy: Always  
+        image: minhngoc2909/udagram-frontend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
         resources:
           requests:
             memory: "512Mi"

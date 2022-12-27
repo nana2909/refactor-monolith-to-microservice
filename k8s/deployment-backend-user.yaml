@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -28,17 +28,19 @@ spec:
         envFrom:
         - configMapRef:
             name: env-config
+        - secretRef:
+            name: env-secret
         env:
-        - name: POSTGRES_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRES_USERNAME 
         - name: POSTGRES_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              name: env-config
+            secretKeyRef:
+              name: env-secret
               key: POSTGRES_PASSWORD
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRES_USERNAME
         - name: POSTGRES_HOST
           valueFrom:
             configMapKeyRef:
@@ -74,4 +76,12 @@ spec:
             configMapKeyRef:
               name: env-config
               key: URL
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true   
       restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret
